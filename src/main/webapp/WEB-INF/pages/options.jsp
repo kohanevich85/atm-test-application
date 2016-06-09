@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home Page</title>
+    <title>Options Page</title>
 </head>
 <body>
-    Hello Home Page
+    <div>Hello Options Page! + ${msg}</div>
 </body>
 </html>
