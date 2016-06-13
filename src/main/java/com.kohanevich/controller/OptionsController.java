@@ -2,8 +2,9 @@ package com.kohanevich.controller;
 
 import com.kohanevich.entity.Card;
 import com.kohanevich.form.WithdrawForm;
-import com.kohanevich.repository.OperationRepository;
-import com.kohanevich.service.CardWithdrawService;
+import com.kohanevich.repository.CardRepositoryDao;
+import com.kohanevich.repository.OperationRepositoryDao;
+import com.kohanevich.service.CardService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,6 @@ import javax.validation.Valid;
 import java.util.Locale;
 
 import static com.kohanevich.form.Parameters.CARD;
-import static com.kohanevich.form.Parameters.CARD_NUMBER;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -32,13 +32,19 @@ public class OptionsController {
     private HttpSession httpSession;
 
     @Inject
+    private CardRepositoryDao cardRepositoryDao;
+
+    @Inject
     private MessageSource messageSource;
 
     @Inject
-    private OperationRepository operationRepository;
+    private OperationRepositoryDao operationRepositoryDao;
 
-    @Inject
+   /* @Inject
     private CardWithdrawService cardWithdrawService;
+*/
+    @Inject
+    private CardService cardService;
 
     @RequestMapping(value = "/options", method = GET)
     public String getOptionsPage() {
@@ -48,7 +54,7 @@ public class OptionsController {
     @RequestMapping(value = "/balance", method = GET)
     public String getBalancePage() {
         Card card = (Card) httpSession.getAttribute(CARD);
-        operationRepository.addInfoOperation(card.getId());
+        operationRepositoryDao.createInfoOperation(card.getId());
         return "balance";
     }
 
@@ -75,15 +81,16 @@ public class OptionsController {
             return "redirect:error";
         }
 
-        String cardNumber = (String) httpSession.getAttribute(CARD_NUMBER);
+        Card card = (Card) httpSession.getAttribute(CARD);
         try {
-            cardWithdrawService.withdraw(form.getAmount(), cardNumber);
+            card = cardService.withdraw(card.getId(), form.getAmount());
         } catch (Exception e) {
             String message = messageSource.getMessage("service.unavailable", null, locale);
             attr.addFlashAttribute("errorMessage", message);
             attr.addFlashAttribute("backUrl", "/options");
             return "redirect:error";
         }
+        httpSession.setAttribute(CARD, card);
         attr.addFlashAttribute("amount", form.getAmount());
         return "redirect:success";
     }

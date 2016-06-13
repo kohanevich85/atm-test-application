@@ -7,22 +7,18 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-    <!-- Enable Spring MVC annotations -->
     <mvc:annotation-driven/>
     <mvc:view-controller path="/error" view-name="error"/>
 
-    <!-- Scans for app's controllers -->
     <context:component-scan base-package="com.kohanevich"/>
     <import resource="applicationContext.xml"/>
-    <!-- View Resolver-->
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- Static resources -->
     <mvc:resources mapping="favicon.ico" location="/resources/favicon.ico"/>
     <mvc:resources mapping="/css/**" location="/resources/css/"/>
     <mvc:resources mapping="/js/**" location="/resources/js/"/>
-    <mvc:resources mapping="/img/**" location="/resources/img/"/>
 </beans>

@@ -5,14 +5,19 @@
 <html>
 <head>
     <title>Страница баланса</title>
+    <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+    <style type="text/css">body {padding-top: 70px;}</style>
 </head>
 <body>
-    <c:set var="now" value="<%=new Date()%>"/>
-    <p>Баланс вашего счета:</p>
-    <p>Номер карты:<c:out value="${sessionScope.card.cardNumber}"/></p>
-    <p>Дата: <fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${now}"/>   </p>
-    <p>Баланс:<c:out value="${sessionScope.card.amount}"/></p>
-    <p><a href="/options">Назад</a></p>
-    <p><a href="/exit">Выход</a></p>
+<div class="row">
+    <div class="col-md-5 col-md-offset-4">
+        <p>Баланс вашего счета:</p>
+        <p>Номер карты: <c:out value="${sessionScope.card.cardNumber}"/></p>
+        <p>Дата: <fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="<%=new Date()%>"/>   </p>
+        <p>Баланс: <c:out value="${sessionScope.card.amount}"/></p>
+        <a role="button" class="btn btn-primary" href="/options">Назад</a>
+        <a role="button" class="btn btn-primary" href="/exit">Выход</a>
+    </div>
+</div>
 </body>
 </html>

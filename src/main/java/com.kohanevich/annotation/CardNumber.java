@@ -11,14 +11,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Shows, that target field has to be validated as email, and it should be unique.
- *
- * @author Maksym Dolia
+ * Created by Denis on 6/12/2016
  */
 @Target(FIELD)
 @Retention(RUNTIME)
 @Constraint(validatedBy = {CardNumberValidator.class})
-public @interface ExistingCardNumber {
+public @interface CardNumber {
     String message() default "card.number.invalid";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

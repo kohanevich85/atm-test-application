@@ -2,7 +2,6 @@ package com.kohanevich.annotation.validator;
 
 import com.kohanevich.annotation.ValidAmount;
 import com.kohanevich.entity.Card;
-import com.kohanevich.repository.CardRepository;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -17,7 +16,6 @@ import static com.kohanevich.form.Parameters.CARD;
  */
 public class WithdrawAmountValidator implements ConstraintValidator<ValidAmount, Integer> {
     @Inject private HttpSession httpSession;
-    @Inject private CardRepository cardRepository;
 
     @Override
     public void initialize(ValidAmount constraintAnnotation) {

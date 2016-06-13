@@ -4,11 +4,18 @@
 <html>
 <head>
     <title>Ошибка</title>
+    <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+    <style type="text/css">body {padding-top: 70px;}</style>
 </head>
 <body>
-    <p>Ошибка:</p>
-    <p><c:out value="${errorMessage}"/></p>
-    <p><a href="/exit">Выход</a></p>
-    <p><a href="${backUrl}">Назад</a></p>
+<div class="row">
+    <div class="col-md-5 col-md-offset-4">
+        <div class="alert alert-danger"><strong>Ошибка:</strong>
+            <c:out value="${errorMessage}"/>
+        </div>
+        <a role="button" class="btn btn-primary" href="/exit">Выход</a>
+        <a role="button" class="btn btn-primary" href="${backUrl}">Назад</a>
+    </div>
+</div>
 </body>
 </html>

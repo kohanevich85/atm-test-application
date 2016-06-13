@@ -3,7 +3,7 @@ package com.kohanevich.controller;
 import com.kohanevich.entity.Card;
 import com.kohanevich.form.CardNumberForm;
 import com.kohanevich.form.PinCodeForm;
-import com.kohanevich.repository.CardRepository;
+import com.kohanevich.repository.CardRepositoryDao;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,7 +30,7 @@ public class CardController {
     private static final int MAX_ATTEMPT = 4;
     @Inject private HttpSession httpSession;
     @Inject private MessageSource messageSource;
-    @Inject private CardRepository cardRepository;
+    @Inject private CardRepositoryDao cardRepositoryDao;
 
     @RequestMapping(method = GET)
     public String getHomePage() {
@@ -68,11 +68,11 @@ public class CardController {
                                   @Valid @ModelAttribute PinCodeForm form,
                                   BindingResult result,
                                   Locale locale) {
-        String cardNumber = (String) httpSession.getAttribute(CARD_NUMBER);
+        Card card = (Card) httpSession.getAttribute(CARD);
         if (result.hasErrors()) {
-            Card card = cardRepository.getCardByNumber(cardNumber);
+            //Card card = cardRepository.getCardByNumber(cardNumber);
             if (card.getAttempt() >= MAX_ATTEMPT) {
-                cardRepository.blockCard(cardNumber);
+                cardRepositoryDao.updateCardBlock(card.getId());
                 String message = messageSource.getMessage("attempt.pin.code.exceeded", null, locale);
                 attr.addFlashAttribute("errorMessage", message);
                 attr.addFlashAttribute("backUrl", "/");
@@ -84,8 +84,8 @@ public class CardController {
                 return "redirect:error";
             }
         }
-        Card card = cardRepository.getCardByNumber(cardNumber);
-        httpSession.setAttribute(CARD, card);
+        /*Card card = cardRepository.getCardByNumber(cardNumber);
+        httpSession.setAttribute(CARD, card);*/
         attr.addFlashAttribute(CARD, card);
         return "redirect:options";
     }

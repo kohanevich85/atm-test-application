@@ -1,13 +1,13 @@
 package com.kohanevich.form;
 
-import com.kohanevich.annotation.ExistingCardNumber;
+import com.kohanevich.annotation.CardNumber;
 
 /**
  * Created by Denis on 6/11/2016
  */
 public class CardNumberForm {
 
-    @ExistingCardNumber
+    @CardNumber
     private String cardNumber;
 
     public String getCardNumber() {
