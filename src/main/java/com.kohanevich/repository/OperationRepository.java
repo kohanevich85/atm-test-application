@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * Created by Denis on 6/13/2016
  */
 @Repository
-public interface OperationRepositoryDao {
+public interface OperationRepository {
     public void     createInfoOperation(Integer id);
     public void createWithdrawOperation(Integer id, BigDecimal amount);
 }

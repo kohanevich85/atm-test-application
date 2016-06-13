@@ -1,8 +1,8 @@
 package com.kohanevich.service;
 
 import com.kohanevich.entity.Card;
-import com.kohanevich.repository.CardRepositoryDao;
-import com.kohanevich.repository.OperationRepositoryDao;
+import com.kohanevich.repository.CardRepository;
+import com.kohanevich.repository.OperationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -17,20 +17,20 @@ import java.math.BigDecimal;
 @Service
 public class CardServiceImpl implements CardService {
     @Inject
-    private CardRepositoryDao cardRepositoryDao;
+    private CardRepository cardRepository;
     @Inject
     private TransactionTemplate transactionTemplate;
     @Inject
-    private OperationRepositoryDao operationRepositoryDao;
+    private OperationRepository operationRepository;
 
     public Card withdraw(Integer id, BigDecimal amount) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
-                cardRepositoryDao.updateCardBalance(id, amount);
-                operationRepositoryDao.createWithdrawOperation(id, amount);
+                cardRepository.updateCardBalance(id, amount);
+                operationRepository.createWithdrawOperation(id, amount);
             }
         });
-        return cardRepositoryDao.getCardById(id);
+        return cardRepository.getCardById(id);
     }
 }

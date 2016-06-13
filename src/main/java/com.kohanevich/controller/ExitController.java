@@ -20,4 +20,9 @@ public class ExitController {
         if(model.containsAttribute(CARD)) model.asMap().remove(CARD);
         return "redirect:cardNumber";
     }
+
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public String exit() {
+        return "404";
+    }
 }

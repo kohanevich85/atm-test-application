@@ -16,7 +16,7 @@ import static java.time.LocalDateTime.now;
  * Created by Denis on 6/13/2016
  */
 @Repository
-public class OperationRepositoryImpl implements OperationRepositoryDao {
+public class OperationRepositoryImpl implements OperationRepository {
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;

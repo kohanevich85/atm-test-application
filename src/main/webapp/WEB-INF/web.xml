@@ -5,6 +5,11 @@
          version="3.0">
     <display-name>ATM</display-name>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404</location>
+    </error-page>
+
     <servlet>
         <description>Spring's dispatcher servlet</description>
         <servlet-name>dispatcher</servlet-name>
@@ -19,16 +24,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-    <!--
-    <filter>
-        <filter-name>secutityFilter</filter-name>
-        <filter-class>com.kohanevich.filter.SecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>secutityFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
 
     <filter>
         <description>Character Encoding Filter to set given encoding to requests</description>
@@ -48,7 +43,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- Parameter's of context -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>WEB-INF/applicationContext.xml</param-value>

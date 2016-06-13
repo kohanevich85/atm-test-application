@@ -3,7 +3,8 @@ package com.kohanevich.controller;
 import com.kohanevich.entity.Card;
 import com.kohanevich.form.CardNumberForm;
 import com.kohanevich.form.PinCodeForm;
-import com.kohanevich.repository.CardRepositoryDao;
+import com.kohanevich.repository.CardRepository;
+import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,7 +31,8 @@ public class CardController {
     private static final int MAX_ATTEMPT = 4;
     @Inject private HttpSession httpSession;
     @Inject private MessageSource messageSource;
-    @Inject private CardRepositoryDao cardRepositoryDao;
+    @Inject private CardRepository cardRepository;
+    private static final Logger LOG = Logger.getLogger(CardController.class);
 
     @RequestMapping(method = GET)
     public String getHomePage() {
@@ -51,6 +53,7 @@ public class CardController {
             String message = messageSource.getMessage("card.number.invalid", null, locale);
             attr.addFlashAttribute("errorMessage", message);
             attr.addFlashAttribute("backUrl", "/");
+            LOG.debug("user enter invalid card number");
             return "redirect:error";
         }
         httpSession.setAttribute(CARD_NUMBER, form.getCardNumber());
@@ -72,7 +75,7 @@ public class CardController {
         if (result.hasErrors()) {
             //Card card = cardRepository.getCardByNumber(cardNumber);
             if (card.getAttempt() >= MAX_ATTEMPT) {
-                cardRepositoryDao.updateCardBlock(card.getId());
+                cardRepository.updateCardBlock(card.getId());
                 String message = messageSource.getMessage("attempt.pin.code.exceeded", null, locale);
                 attr.addFlashAttribute("errorMessage", message);
                 attr.addFlashAttribute("backUrl", "/");

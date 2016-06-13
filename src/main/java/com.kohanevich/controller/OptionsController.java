@@ -2,8 +2,8 @@ package com.kohanevich.controller;
 
 import com.kohanevich.entity.Card;
 import com.kohanevich.form.WithdrawForm;
-import com.kohanevich.repository.CardRepositoryDao;
-import com.kohanevich.repository.OperationRepositoryDao;
+import com.kohanevich.repository.CardRepository;
+import com.kohanevich.repository.OperationRepository;
 import com.kohanevich.service.CardService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -32,17 +32,14 @@ public class OptionsController {
     private HttpSession httpSession;
 
     @Inject
-    private CardRepositoryDao cardRepositoryDao;
+    private CardRepository cardRepository;
 
     @Inject
     private MessageSource messageSource;
 
     @Inject
-    private OperationRepositoryDao operationRepositoryDao;
+    private OperationRepository operationRepository;
 
-   /* @Inject
-    private CardWithdrawService cardWithdrawService;
-*/
     @Inject
     private CardService cardService;
 
@@ -54,7 +51,7 @@ public class OptionsController {
     @RequestMapping(value = "/balance", method = GET)
     public String getBalancePage() {
         Card card = (Card) httpSession.getAttribute(CARD);
-        operationRepositoryDao.createInfoOperation(card.getId());
+        operationRepository.createInfoOperation(card.getId());
         return "balance";
     }
 

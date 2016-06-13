@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * Created by Denis on 6/13/2016
  */
 @Repository
-public class CardRepositoryImpl implements CardRepositoryDao {
+public class CardRepositoryImpl implements CardRepository {
 
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;

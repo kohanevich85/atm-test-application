@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * Created by Denis on 6/13/2016
  */
 @Repository
-public interface CardRepositoryDao {
+public interface CardRepository {
     public Card getCardByNumber(String cardNumber);
     public Card getCardById(Integer id);
     public void updateCardBlock(Integer id);
