@@ -19,11 +19,4 @@
     </bean>
 
     <import resource="database.xml"/>
-    <!-- - Profiles
-     <beans profile="dev">
-         <import resource="database-dev.xml"/>
-     </beans>
-     <beans profile="prod">
-         <import resource="database-prod.xml"/>
-     </beans>-->
 </beans>
